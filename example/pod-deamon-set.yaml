@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: deamon-nginx
+  labels:
+    name: deamon-nginx
+spec:
+  selector:
+    matchLabels:
+      name: deamon-nginx
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - deamon-nginx
+  template:
+    metadata:
+      name: deamon-nginx
+      labels:
+        name: deamon-nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            failureThreshold: 3
+            successThreshold: 1
+            timeoutSeconds: 1
