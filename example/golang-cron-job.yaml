@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: golang-cron-job
+  labels:
+    name: golang-cron-job
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: golang-cron-job
+          labels:
+            name: golang-cron-job
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: golang-job
+              image: golang
+              ports:
+                - containerPort: 8080
+
